@@ -47,6 +47,6 @@
 #include <stdint.h>
 #include <string.h>
 
-void siphash(const uint8_t *date, const size_t len, const uint8_t *key, uint8_t *hash);
+void siphash(uint8_t *hash, const uint8_t *data, const size_t len, const uint8_t *key);
 
 #endif

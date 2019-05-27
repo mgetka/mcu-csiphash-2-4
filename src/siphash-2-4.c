@@ -161,7 +161,7 @@ void reverse64(uint8_t *x) {
     }                                                       \
 }
 
-void siphash(const uint8_t *data, const size_t len, const uint8_t *key, uint8_t *hash) {
+void siphash(uint8_t *hash, const uint8_t *data, const size_t len, const uint8_t *key) {
     
     uint8_t v0[] = {0x73, 0x6f, 0x6d, 0x65, 0x70, 0x73, 0x65, 0x75};
     uint8_t v1[] = {0x64, 0x6f, 0x72, 0x61, 0x6e, 0x64, 0x6f, 0x6d};
