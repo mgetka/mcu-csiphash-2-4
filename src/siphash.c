@@ -49,7 +49,7 @@
     }                                                       \
 }
 
-void rotl64_16(uint8_t *v) {
+void __rotl64_16(uint8_t *v) {
     uint8_t v0 = v[0];
     uint8_t v1 = v[1];
     for (int i=0; i<6; i++) {
@@ -78,7 +78,7 @@ void rotl64_16(uint8_t *v) {
     }                                                       \
 }
 
-void reverse64(uint8_t *x) {
+void __reverse64(uint8_t *x) {
     uint8_t xTemp;
     for (int i=0; i<4; i++) {
         xTemp = x[i];
@@ -115,17 +115,17 @@ void reverse64(uint8_t *x) {
 
 
 #define __ROL_17BITS(v) {                                   \
-    rotl64_16(v);                                           \
+    __rotl64_16(v);                                         \
     __ROTL64_xBITS(v,1);                                    \
 }
 
 #define __ROL_21BITS(v) {                                   \
-    rotl64_16(v);                                           \
+    __rotl64_16(v);                                         \
     __ROTL64_xBITS(v,5);                                    \
 }
 
 #define __ROL_13BITS(v) {                                   \
-    rotl64_16(v);                                           \
+    __rotl64_16(v);                                         \
     __ROTR64_xBITS(v,3);                                    \
 }
 
@@ -172,12 +172,12 @@ void siphash(uint8_t *hash, const uint8_t *data, const size_t len, const uint8_t
     unsigned int i;
     
     memcpy(m, key, 8);
-    reverse64(m);
+    __reverse64(m);
     __XOR64(v0, m);
     __XOR64(v2, m);
     
     memcpy(m, key+8, 8);
-    reverse64(m);
+    __reverse64(m);
     __XOR64(v1, m);
     __XOR64(v3, m);
     
