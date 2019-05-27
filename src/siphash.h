@@ -1,5 +1,5 @@
 /*
- * siphash-2-4.c
+ * siphash.h
  * SipHash implementation for compilers w/o 64 bit arithmetics
  * Copyright (c) 2019 Michał Getka
  * 
@@ -40,8 +40,8 @@
  * Provide this copyright is maintained.
  * 
  */
-#ifndef _SIPHASH_2_4_H
-#define _SIPHASH_2_4_H
+#ifndef _SIPHASH_H
+#define _SIPHASH_H
 
 #include <stddef.h>
 #include <stdint.h>
