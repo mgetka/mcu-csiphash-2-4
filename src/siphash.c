@@ -191,9 +191,9 @@ void siphash(uint8_t *hash, const uint8_t *data, const size_t len, const uint8_t
     msg_byte_counter = 0;
     
     for (i = 0; i<len; i++) __UPDATE_HASH(data[i]);
-
+    
     uint8_t msgLen = msg_byte_counter;
-
+    
     while (m_idx > 0) __UPDATE_HASH(0);
     
     __UPDATE_HASH(msgLen);
@@ -205,8 +205,8 @@ void siphash(uint8_t *hash, const uint8_t *data, const size_t len, const uint8_t
     __SIPHASH_ROUND();
     
     __XOR64(v0, v1);
-	__XOR64(v0, v2);
-	__XOR64(v0, v3);
+    __XOR64(v0, v2);
+    __XOR64(v0, v3);
     
     memcpy(hash, v0, 8);
     
