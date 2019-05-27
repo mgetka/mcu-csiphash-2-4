@@ -1,6 +1,6 @@
 /*
  * siphash-2-4.c
- * SipHash implementation for pre-C99 compilers
+ * SipHash implementation for compilers w/o 64 bit arithmetics
  * Copyright (c) 2019 Michał Getka
  * 
  * SipHash is a family of pseudorandom functions (a.k.a. keyed hash functions) optimized for speed on short messages. 
