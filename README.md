@@ -1,6 +1,8 @@
 mcu-csiphash-2-4
 ===================================================================================================
 
+[![Build Status](https://travis-ci.com/mgetka/mcu-csiphash-2-4.svg?branch=master)](https://travis-ci.com/mgetka/mcu-csiphash-2-4)
+
 > SipHash is a family of pseudorandom functions (a.k.a. keyed hash functions) optimized for speed on
 > short messages. 
 > 
