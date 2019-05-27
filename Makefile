@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-CFLAGS = -std=c89
+CFLAGS = -std=c89 -I src
 CC = gcc $(CFLAGS)
 
 example: bin/example
@@ -28,10 +28,10 @@ test: bin/reference
 	./bin/reference
 	
 bin/example: src/siphash.c src/example.c
-	$(CC) src/siphash.c src/example.c -o bin/example -I src
+	$(CC) src/siphash.c src/example.c -o bin/example
 
 bin/reference: src/siphash.c tests/reference.c
-	$(CC) src/siphash.c tests/reference.c -o bin/reference -I src
+	$(CC) src/siphash.c tests/reference.c -o bin/reference
 
 clean:
 	rm -f bin/*
