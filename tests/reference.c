@@ -123,7 +123,8 @@ void hexdump(const uint8_t * data, const size_t len) {
 
 void reverse64(uint8_t *x) {
     uint8_t xTemp;
-    for (int i=0; i<4; i++) {
+    int i;
+    for (i=0; i<4; i++) {
         xTemp = x[i];
         x[i] = x[7-i];
         x[7-i]=xTemp;

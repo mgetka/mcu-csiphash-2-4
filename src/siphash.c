@@ -43,27 +43,42 @@
 
 #include "siphash.h"
 
-#define __XOR64(v,v1) {                                     \
-    for (int i=0; i<8; i++) {                               \
-        v[i] ^= v1[i];                                      \
-    }                                                       \
-}
-
 void __rotl64_16(uint8_t *v) {
     uint8_t v0 = v[0];
     uint8_t v1 = v[1];
-    for (int i=0; i<6; i++) {
+    int i;
+    for (i = 0; i < 6; i++) {
         v[i] = v[i+2];
     }
     v[6] = v0;
     v[7] = v1;
 }
 
+void __reverse64(uint8_t *x) {
+    uint8_t xTemp;
+    int i;
+    for (i = 0; i < 4; i++) {
+        xTemp = x[i];
+        x[i] = x[7-i];
+        x[7-i]=xTemp;
+    }
+}
+
+/*
+ * The following macros require that in the scope of their execution the variable int _i is defined.
+ */
+
+#define __XOR64(v,v1) {                                     \
+    for (_i = 0; _i < 8; _i++) {                            \
+        v[_i] ^= v1[_i];                                    \
+    }                                                       \
+}
+
 #define __ROTL64_16(v) {                                    \
     uint8_t v0 = v[0];                                      \
     uint8_t v1 = v[1];                                      \
-    for (int i=0; i<6; i++) {                               \
-        v[i] = v[i+2];                                      \
+    for (_i = 0; _i < 6; _i++) {                            \
+        v[_i] = v[_i+2];                                    \
     }                                                       \
     v[6] = v0;                                              \
     v[7] = v1;                                              \
@@ -71,44 +86,35 @@ void __rotl64_16(uint8_t *v) {
 
 #define __ROTL64_32(v) {                                    \
     uint8_t vTemp;                                          \
-    for (int i=0; i<4; i++) {                               \
-        vTemp = v[i];                                       \
-        v[i] = v[i+4];                                      \
-        v[i+4]=vTemp;                                       \
+    for (_i = 0; _i < 4; _i++) {                            \
+        vTemp = v[_i];                                      \
+        v[_i] = v[_i+4];                                    \
+        v[_i+4]=vTemp;                                      \
     }                                                       \
-}
-
-void __reverse64(uint8_t *x) {
-    uint8_t xTemp;
-    for (int i=0; i<4; i++) {
-        xTemp = x[i];
-        x[i] = x[7-i];
-        x[7-i]=xTemp;
-    }
 }
 
 #define __ADD64(v, s) {                                     \
     uint16_t carry = 0;                                     \
-    for (int i=7; i>=0; i--) {                              \
-        carry += v[i];                                      \
-        carry += s[i];                                      \
-        v[i] = carry;                                       \
+    for (_i = 7; _i >= 0; _i--) {                           \
+        carry += v[_i];                                     \
+        carry += s[_i];                                     \
+        v[_i] = carry;                                      \
         carry = carry>>8;                                   \
     }                                                       \
 }
 
 #define __ROTL64_xBITS(v,x) {                               \
     uint8_t v0 = (v)[0];                                    \
-    for (int i=0; i<7; i++) {                               \
-        (v)[i] = ((v)[i]<<(x)) | ((v)[i+1]>>(8-(x)));       \
+    for (_i = 0; _i < 7; _i++) {                            \
+        (v)[_i] = ((v)[_i]<<(x)) | ((v)[_i+1]>>(8-(x)));    \
     }                                                       \
     (v)[7] =  ((v)[7]<<(x)) | (v0>>(8-(x)));                \
 }
 
 #define __ROTR64_xBITS(v,x) {                               \
     uint8_t v7 = (v)[7];                                    \
-    for (int i=7; i>0; i--) {                               \
-        (v)[i] = ((v)[i]>>(x)) | ((v)[i-1]<<(8-(x)));       \
+    for (_i = 7; _i > 0; _i--) {                            \
+        (v)[_i] = ((v)[_i]>>(x)) | ((v)[_i-1]<<(8-(x)));    \
     }                                                       \
     (v)[0] =  ((v)[0]>>(x)) | (v7<<(8-(x)));                \
 }
@@ -169,7 +175,7 @@ void siphash(uint8_t *hash, const uint8_t *data, const size_t len, const uint8_t
     uint8_t v3[] = {0x74, 0x65, 0x64, 0x62, 0x79, 0x74, 0x65, 0x73};
     uint8_t m[8], msg_byte_counter;
     int8_t m_idx;
-    unsigned int i;
+    int _i, i;
     
     memcpy(m, key, 8);
     __reverse64(m);
