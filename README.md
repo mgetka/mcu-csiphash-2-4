@@ -24,7 +24,7 @@ Implemented algorithm version uses 128-bit key to produce 64-bit hash of the pro
 arbitrary length.
 
 This library is strongly inspired by the [SipHash_2_4](http://www.forward.com.au/pfod/SipHashLibrary/)
-library for 8bit Atmel processors authored by Matthew Ford. Actually, all the core logic of the
+C++ library for 8bit Atmel processors authored by Matthew Ford. Actually, all the core logic of the
 SipHash algorithm is sourced from there. The following is the copyright disclosure of the
 SipHash_2_4 library author
 
