@@ -20,7 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-CC = gcc
+CFLAGS = -std=c89
+CC = gcc $(CFLAGS)
 
 example: bin/example
 test: bin/reference

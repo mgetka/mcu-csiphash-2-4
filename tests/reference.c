@@ -144,7 +144,7 @@ int test_vectors() {
         
         siphash(out, in, (size_t) i, k);
         
-        // Test vectors are stored in big-endian and the hash is presented as little
+        /* Test vectors are stored in big-endian and the hash is presented as little */
         reverse64(out);
         
         if (memcmp(out, vectors[i], 8)) {
