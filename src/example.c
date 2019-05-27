@@ -1,5 +1,5 @@
 /*
- * siphash-2-4.c
+ * example.c
  * SipHash implementation for compilers w/o 64 bit arithmetics
  * Copyright (c) 2019 Michał Getka
  * 
@@ -28,7 +28,7 @@
  * 
  */
 
-#include "siphash-2-4.h"
+#include "siphash.h"
 #include <string.h>
 #include <stdio.h>
 

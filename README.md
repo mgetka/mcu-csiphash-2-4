@@ -48,7 +48,7 @@ Hash is calculated under the `key` provided as 16 element array of `uint8_t` typ
 Simple example of using the library is provided in `src/example.c`.
 
 ```c
-#include "siphash-2-4.h"
+#include "siphash.h"
 #include <string.h>
 #include <stdio.h>
 

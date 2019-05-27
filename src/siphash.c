@@ -1,5 +1,5 @@
 /*
- * siphash-2-4.c
+ * siphash.c
  * SipHash implementation for compilers w/o 64 bit arithmetics
  * Copyright (c) 2019 Michał Getka
  * 
@@ -41,7 +41,7 @@
  * 
  */
 
-#include "siphash-2-4.h"
+#include "siphash.h"
 
 #define __XOR64(v,v1) {                                     \
     for (int i=0; i<8; i++) {                               \
