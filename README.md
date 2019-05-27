@@ -35,6 +35,48 @@ Provide this copyright is maintained.
 
 # Usage
 
+```c
+void siphash(uint8_t *hash,
+             const uint8_t *data,
+             const size_t len,
+             const uint8_t *key)
+```
+
+Calculated hash of provided `data` will be stored in `hash`. Length of the data is passed as `len`.
+Hash is calculated under the `key` provided as 16 element array of `uint8_t` type.
+
+Simple example of using the library is provided in `src/example.c`.
+
+```c
+#include "siphash-2-4.h"
+#include <string.h>
+#include <stdio.h>
+
+void hexdump(const uint8_t * data, const size_t len) {
+    unsigned int i;
+    for (i = 0; i < len; i++)
+        printf("0x%x ",data[i]);
+    printf("\n");
+}
+
+unsigned int main() {
+    
+    uint8_t hash[8];
+    uint8_t key[] = {0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38,
+                     0x39, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36};
+    char *data = "Hello world!";
+    
+    siphash(hash, (const uint8_t *) data, strlen(data), key);
+    
+    printf("Data:\t%s\n", data);
+    printf("Key:\t"); hexdump(key, (size_t) 16);
+    printf("Hash:\t"); hexdump(hash, (size_t) 8);
+    
+    return 0;
+    
+}
+```
+
 # Testing
 
 # License
