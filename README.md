@@ -55,7 +55,7 @@ Simple example of using the library is provided in `src/example.c`.
 void hexdump(const uint8_t * data, const size_t len) {
     unsigned int i;
     for (i = 0; i < len; i++)
-        printf("0x%x ",data[i]);
+        printf("0x%2x ",data[i]);
     printf("\n");
 }
 
