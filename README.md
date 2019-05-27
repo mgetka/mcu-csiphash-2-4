@@ -43,7 +43,8 @@ void siphash(uint8_t *hash,
 ```
 
 Calculated hash of provided `data` will be stored in `hash`. Length of the data is passed as `len`.
-Hash is calculated under the `key` provided as 16 element array of `uint8_t` type.
+Hash is calculated under the `key` provided as 16 element array of `uint8_t` type. Calculated hash
+is stored in little-endian order.
 
 Simple example of using the library is provided in `src/example.c`.
 
@@ -77,7 +78,17 @@ unsigned int main() {
 }
 ```
 
+The example can be compiled by invoking
+```
+$ make example
+```
+
 # Testing
+
+To perform the tests, run
+```
+$ make test
+```
 
 # License
 
