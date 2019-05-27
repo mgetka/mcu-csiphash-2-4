@@ -43,6 +43,10 @@
 #ifndef _SIPHASH_2_4_H
 #define _SIPHASH_2_4_H
 
+#include <stddef.h>
 #include <stdint.h>
+#include <string.h>
+
+void siphash(const uint8_t *date, const size_t len, const uint8_t *key, uint8_t *hash);
 
 #endif
