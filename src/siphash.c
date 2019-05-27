@@ -89,7 +89,7 @@ void __reverse64(uint8_t *x) {
     for (_i = 0; _i < 4; _i++) {                            \
         vTemp = v[_i];                                      \
         v[_i] = v[_i+4];                                    \
-        v[_i+4]=vTemp;                                      \
+        v[_i+4] = vTemp;                                    \
     }                                                       \
 }
 
@@ -116,7 +116,7 @@ void __reverse64(uint8_t *x) {
     for (_i = 7; _i > 0; _i--) {                            \
         (v)[_i] = ((v)[_i]>>(x)) | ((v)[_i-1]<<(8-(x)));    \
     }                                                       \
-    (v)[0] =  ((v)[0]>>(x)) | (v7<<(8-(x)));                \
+    (v)[0] = ((v)[0]>>(x)) | (v7<<(8-(x)));                \
 }
 
 
@@ -190,7 +190,7 @@ void siphash(uint8_t *hash, const uint8_t *data, const size_t len, const uint8_t
     m_idx = 7;
     msg_byte_counter = 0;
     
-    for (i = 0; i<len; i++) __UPDATE_HASH(data[i]);
+    for (i = 0; i < len; i++) __UPDATE_HASH(data[i]);
     
     uint8_t msgLen = msg_byte_counter;
     
