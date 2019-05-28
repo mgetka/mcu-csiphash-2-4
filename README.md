@@ -50,7 +50,7 @@ Calculated hash of provided `data` will be stored in `hash`. Length of the data 
 Hash is calculated under the `key` provided as 16 element array of `uint8_t` type. Calculated hash
 is stored in little-endian order.
 
-Simple example of using the library is provided in `src/example.c`.
+Simple usage example is provided in `src/example.c`.
 
 ```c
 #include "siphash.h"
