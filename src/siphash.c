@@ -43,7 +43,7 @@
 
 #include "siphash.h"
 
-void __rotl64_16(uint8_t *v) {
+void _msh_rotl64_16(uint8_t *v) {
     uint8_t v0 = v[0];
     uint8_t v1 = v[1];
     int i;
@@ -54,7 +54,7 @@ void __rotl64_16(uint8_t *v) {
     v[7] = v1;
 }
 
-void __reverse64(uint8_t *x) {
+void _msh_reverse64(uint8_t *x) {
     uint8_t xTemp;
     int i;
     for (i = 0; i < 4; i++) {
@@ -68,13 +68,13 @@ void __reverse64(uint8_t *x) {
  * The following macros require that in the scope of their execution the variable int _i is defined.
  */
 
-#define __XOR64(v,v1) {                                     \
+#define _msh_XOR64(v,v1) {                                     \
     for (_i = 0; _i < 8; _i++) {                            \
         v[_i] ^= v1[_i];                                    \
     }                                                       \
 }
 
-#define __ROTL64_16(v) {                                    \
+#define _msh_ROTL64_16(v) {                                    \
     uint8_t v0 = v[0];                                      \
     uint8_t v1 = v[1];                                      \
     for (_i = 0; _i < 6; _i++) {                            \
@@ -84,7 +84,7 @@ void __reverse64(uint8_t *x) {
     v[7] = v1;                                              \
 }
 
-#define __ROTL64_32(v) {                                    \
+#define _msh_ROTL64_32(v) {                                    \
     uint8_t vTemp;                                          \
     for (_i = 0; _i < 4; _i++) {                            \
         vTemp = v[_i];                                      \
@@ -93,7 +93,7 @@ void __reverse64(uint8_t *x) {
     }                                                       \
 }
 
-#define __ADD64(v, s) {                                     \
+#define _msh_ADD64(v, s) {                                     \
     uint16_t carry = 0;                                     \
     for (_i = 7; _i >= 0; _i--) {                           \
         carry += v[_i];                                     \
@@ -103,7 +103,7 @@ void __reverse64(uint8_t *x) {
     }                                                       \
 }
 
-#define __ROTL64_xBITS(v,x) {                               \
+#define _msh_ROTL64_xBITS(v,x) {                               \
     uint8_t v0 = (v)[0];                                    \
     for (_i = 0; _i < 7; _i++) {                            \
         (v)[_i] = ((v)[_i]<<(x)) | ((v)[_i+1]>>(8-(x)));    \
@@ -111,59 +111,59 @@ void __reverse64(uint8_t *x) {
     (v)[7] =  ((v)[7]<<(x)) | (v0>>(8-(x)));                \
 }
 
-#define __ROTR64_xBITS(v,x) {                               \
+#define _msh_ROTR64_xBITS(v,x) {                               \
     uint8_t v7 = (v)[7];                                    \
     for (_i = 7; _i > 0; _i--) {                            \
         (v)[_i] = ((v)[_i]>>(x)) | ((v)[_i-1]<<(8-(x)));    \
     }                                                       \
-    (v)[0] = ((v)[0]>>(x)) | (v7<<(8-(x)));                \
+    (v)[0] = ((v)[0]>>(x)) | (v7<<(8-(x)));                 \
 }
 
 
-#define __ROL_17BITS(v) {                                   \
-    __rotl64_16(v);                                         \
-    __ROTL64_xBITS(v,1);                                    \
+#define _msh_ROL_17BITS(v) {                                   \
+    _msh_rotl64_16(v);                                         \
+    _msh_ROTL64_xBITS(v,1);                                    \
 }
 
-#define __ROL_21BITS(v) {                                   \
-    __rotl64_16(v);                                         \
-    __ROTL64_xBITS(v,5);                                    \
+#define _msh_ROL_21BITS(v) {                                   \
+    _msh_rotl64_16(v);                                         \
+    _msh_ROTL64_xBITS(v,5);                                    \
 }
 
-#define __ROL_13BITS(v) {                                   \
-    __rotl64_16(v);                                         \
-    __ROTR64_xBITS(v,3);                                    \
+#define _msh_ROL_13BITS(v) {                                   \
+    _msh_rotl64_16(v);                                         \
+    _msh_ROTR64_xBITS(v,3);                                    \
 }
 
-#define __SIPHASH_ROUND() {                                 \
-    __ADD64(v0,v1);                                         \
-    __ADD64(v2,v3);                                         \
-    __ROL_13BITS(v1);                                       \
-    __ROTL64_16(v3);                                        \
+#define _msh_SIPHASH_ROUND() {                                 \
+    _msh_ADD64(v0,v1);                                         \
+    _msh_ADD64(v2,v3);                                         \
+    _msh_ROL_13BITS(v1);                                       \
+    _msh_ROTL64_16(v3);                                        \
                                                             \
-    __XOR64(v1, v0);                                        \
-    __XOR64(v3, v2);                                        \
-    __ROTL64_32(v0);                                        \
+    _msh_XOR64(v1, v0);                                        \
+    _msh_XOR64(v3, v2);                                        \
+    _msh_ROTL64_32(v0);                                        \
                                                             \
-    __ADD64(v2, v1);                                        \
-    __ADD64(v0, v3);                                        \
-    __ROL_17BITS(v1);                                       \
-    __ROL_21BITS(v3);                                       \
+    _msh_ADD64(v2, v1);                                        \
+    _msh_ADD64(v0, v3);                                        \
+    _msh_ROL_17BITS(v1);                                       \
+    _msh_ROL_21BITS(v3);                                       \
                                                             \
-    __XOR64(v1, v2);                                        \
-    __XOR64(v3, v0);                                        \
-    __ROTL64_32(v2);                                        \
+    _msh_XOR64(v1, v2);                                        \
+    _msh_XOR64(v3, v0);                                        \
+    _msh_ROTL64_32(v2);                                        \
 }
 
-#define __UPDATE_HASH(c) {                                  \
+#define _msh_UPDATE_HASH(c) {                                  \
     msg_byte_counter++;                                     \
     m[m_idx--] = c;                                         \
     if (m_idx < 0) {                                        \
         m_idx = 7;                                          \
-        __XOR64(v3, m);                                     \
-        __SIPHASH_ROUND();                                  \
-        __SIPHASH_ROUND();                                  \
-        __XOR64(v0, m);                                     \
+        _msh_XOR64(v3, m);                                     \
+        _msh_SIPHASH_ROUND();                                  \
+        _msh_SIPHASH_ROUND();                                  \
+        _msh_XOR64(v0, m);                                     \
     }                                                       \
 }
 
@@ -178,35 +178,35 @@ void siphash(uint8_t *hash, const uint8_t *data, const size_t len, const uint8_t
     int _i, i;
     
     memcpy(m, key, 8);
-    __reverse64(m);
-    __XOR64(v0, m);
-    __XOR64(v2, m);
+    _msh_reverse64(m);
+    _msh_XOR64(v0, m);
+    _msh_XOR64(v2, m);
     
     memcpy(m, key+8, 8);
-    __reverse64(m);
-    __XOR64(v1, m);
-    __XOR64(v3, m);
+    _msh_reverse64(m);
+    _msh_XOR64(v1, m);
+    _msh_XOR64(v3, m);
     
     m_idx = 7;
     msg_byte_counter = 0;
     
-    for (i = 0; i < len; i++) __UPDATE_HASH(data[i]);
+    for (i = 0; i < len; i++) _msh_UPDATE_HASH(data[i]);
     
     uint8_t msgLen = msg_byte_counter;
     
-    while (m_idx > 0) __UPDATE_HASH(0);
+    while (m_idx > 0) _msh_UPDATE_HASH(0);
     
-    __UPDATE_HASH(msgLen);
+    _msh_UPDATE_HASH(msgLen);
     
     v2[7] ^= 0xff;
-    __SIPHASH_ROUND();
-    __SIPHASH_ROUND();
-    __SIPHASH_ROUND();
-    __SIPHASH_ROUND();
+    _msh_SIPHASH_ROUND();
+    _msh_SIPHASH_ROUND();
+    _msh_SIPHASH_ROUND();
+    _msh_SIPHASH_ROUND();
     
-    __XOR64(v0, v1);
-    __XOR64(v0, v2);
-    __XOR64(v0, v3);
+    _msh_XOR64(v0, v1);
+    _msh_XOR64(v0, v2);
+    _msh_XOR64(v0, v3);
     
     memcpy(hash, v0, 8);
     
