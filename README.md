@@ -101,6 +101,11 @@ To perform the tests, run
 $ make test
 ```
 
+# Extras
+
+The `extras` folder contains some additional utilities. They will not be documented to a greater
+extent than the comments in the source files.
+
 # License
 
 This code is released under the [MIT license](LICENSE).
