@@ -208,8 +208,8 @@ void siphash(uint8_t *hash, const uint8_t *data, const size_t len, const uint8_t
     _msh_XOR64(v0, v2);
     _msh_XOR64(v0, v3);
     
-    reverse64(out);
-    
     memcpy(hash, v0, 8);
+    
+    _msh_reverse64(hash);
     
 }
