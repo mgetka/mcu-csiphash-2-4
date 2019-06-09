@@ -144,9 +144,6 @@ int test_vectors() {
         
         siphash(out, in, (size_t) i, k);
         
-        /* Test vectors are stored in big-endian and the hash is presented as little */
-        reverse64(out);
-        
         if (memcmp(out, vectors[i], 8)) {
             printf("test vector failed for %d bytes\n", i);
             printf("Expected:\t"); hexdump(vectors[i], 8);
