@@ -121,16 +121,6 @@ void hexdump(const uint8_t * data, const size_t len) {
     printf("\n");
 }
 
-void reverse64(uint8_t *x) {
-    uint8_t xTemp;
-    int i;
-    for (i=0; i<4; i++) {
-        xTemp = x[i];
-        x[i] = x[7-i];
-        x[7-i]=xTemp;
-    }
-}
-
 int test_vectors() {
 
     uint8_t in[MAXLEN], out[8], k[16];
