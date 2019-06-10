@@ -43,7 +43,7 @@
 
 #include "siphash.h"
 
-void _msh_rotl64_16(uint8_t *v) {
+static void _msh_rotl64_16(uint8_t *v) {
     uint8_t v0 = v[0];
     uint8_t v1 = v[1];
     int i;
@@ -54,7 +54,7 @@ void _msh_rotl64_16(uint8_t *v) {
     v[7] = v1;
 }
 
-void _msh_reverse64(uint8_t *x) {
+static void _msh_reverse64(uint8_t *x) {
     uint8_t xTemp;
     int i;
     for (i = 0; i < 4; i++) {
