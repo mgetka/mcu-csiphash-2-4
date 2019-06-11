@@ -7,7 +7,7 @@
  * limited to 1023 bytes, and the shared secret is passed as siphash key, which
  * is not strictly what ISO standard suggests.
  * 
- * This implementation utilizes dynamically allocated buffers. Not for the faint of heart
+ * This implementation utilizes only statically allocated buffers.
  * 
  */
 
@@ -32,13 +32,17 @@
  * 
  */
 
+#ifndef KDF_INFO_LEN
+#define KDF_INFO_LEN 32
+#endif
+
 #include "kdf1.h"
 
 int kdf1(uint8_t *derived_key, const size_t derived_key_length,
     const uint8_t *info, const size_t info_len,
     const uint8_t *hash_key) {
     
-    uint8_t hash[8], *buffer, counter = 0;
+    uint8_t hash[8], buffer[KDF_INFO_LEN + 4], counter = 0;
     size_t offset = 0;
     
     /* 
@@ -47,9 +51,11 @@ int kdf1(uint8_t *derived_key, const size_t derived_key_length,
      */
     if (derived_key_length > 1023) return -EINVAL;
     
-    /* We don't know in advance how long is the hash input so malloc. */
-    buffer = malloc(4 + info_len);
-    if (!buffer) return -ENOMEM;
+    /*
+     * Check if provided info doesn't exceed preallocated hash input
+     * buffer length.
+     */
+    if (info_len > KDF_INFO_LEN) return -EINVAL;
     
     /* Populate hash input buffer with provided info. */
     memcpy(buffer + 4, info, info_len);
@@ -90,9 +96,6 @@ int kdf1(uint8_t *derived_key, const size_t derived_key_length,
         
     }
     while (offset < derived_key_length);
-    
-    /* Free the previously allocated memory. */
-    free(buffer);
     
     return 0;
     
