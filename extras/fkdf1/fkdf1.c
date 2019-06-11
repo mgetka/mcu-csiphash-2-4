@@ -49,13 +49,13 @@ int kdf1(uint8_t *derived_key, const size_t derived_key_length,
      * To avoid troubles with endianness we limit maximum derived
      * key length to 1023 bytes and operate on a single byte counter.
      */
-    if (derived_key_length > 1023) return -EINVAL;
+    if (derived_key_length > 1023) return -1;
     
     /*
      * Check if provided info doesn't exceed preallocated hash input
      * buffer length.
      */
-    if (info_len > KDF_INFO_LEN) return -EINVAL;
+    if (info_len > KDF_INFO_LEN) return -1;
     
     /* Populate hash input buffer with provided info. */
     memcpy(buffer + 4, info, info_len);

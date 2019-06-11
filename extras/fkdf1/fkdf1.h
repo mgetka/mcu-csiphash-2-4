@@ -35,7 +35,6 @@
 #include "siphash.h"
 #include "stdio.h"
 #include <stdlib.h>
-#include <errno.h>
 
 int kdf1(uint8_t *derived_key, const size_t derived_key_length,
     const uint8_t *info, const size_t info_len,
