@@ -92,4 +92,6 @@ int kdf1(uint8_t *derived_key, const size_t derived_key_length,
     /* Free the previously allocated memory. */
     free(buffer);
     
+    return 0;
+    
 }
