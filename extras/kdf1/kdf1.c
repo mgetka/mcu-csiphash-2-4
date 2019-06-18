@@ -51,6 +51,8 @@ int kdf1(uint8_t *derived_key, const size_t derived_key_length,
     buffer = malloc(4 + info_len);
     if (!buffer) return -2;
     
+    /* Don't work in a mess plx */
+    memset(buffer, 0x00, sizeof(buffer));
     /* Populate hash input buffer with provided info. */
     memcpy(buffer + 4, info, info_len);
     
