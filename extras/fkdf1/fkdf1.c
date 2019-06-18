@@ -36,7 +36,7 @@
 #define KDF_INFO_LEN 32
 #endif
 
-#include "kdf1.h"
+#include "fkdf1.h"
 
 int kdf1(uint8_t *derived_key, const size_t derived_key_length,
     const uint8_t *info, const size_t info_len,
